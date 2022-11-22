@@ -9,7 +9,7 @@ contract Voting is Ownable {
     uint public winningProposalID;
 
     struct Voter {
-    bool isRegistered;
+        bool isRegistered;
         bool hasVoted;
         uint votedProposalId;
     }
@@ -96,7 +96,6 @@ contract Voting is Ownable {
 
     // ::::::::::::: STATE ::::::::::::: //
 
-
     function startProposalsRegistering() external onlyOwner {
         require(workflowStatus == WorkflowStatus.RegisteringVoters, 'Registering proposals cant be started now');
         workflowStatus = WorkflowStatus.ProposalsRegistrationStarted;
@@ -141,10 +140,4 @@ contract Voting is Ownable {
        emit WorkflowStatusChange(WorkflowStatus.VotingSessionEnded, WorkflowStatus.VotesTallied);
     }
 
-    // function reset() external onlyOwner {
-    //     require(workflowStatus == WorkflowStatus.VotingSessionEnded, "Current status is not tallied yet");
-    //     winningProposalID = null;
-    //     workflowStatus = WorkflowStatus.RegisteringVoters;
-    //     voters = new
-    // }
 }
