@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useEth from "../../contexts/EthContext/useEth";
-import refresh from "../../utils/refresh"
 
 function ContractBtns({ isOwner, workflowStatusLabel }) {
   const { state: { contract, accounts } } = useEth();
@@ -76,53 +75,6 @@ function ContractBtns({ isOwner, workflowStatusLabel }) {
     }
   };
 
-  // ::::::::::::: STATE ::::::::::::: //
-
-  const startProposalsRegistering = async e => {
-    try {
-      await contract?.methods?.startProposalsRegistering().send({ from: accounts[0] });
-      await refresh();
-    } catch (e) {
-      console.log(e)
-    }
-  };
-
-  const endProposalsRegistering = async e => {
-    try {
-      await contract?.methods?.endProposalsRegistering().send({ from: accounts[0] });
-      await refresh();
-    } catch (e) {
-      console.log(e)
-    }
-  };
-
-  const startVotingSession = async e => {
-    try {
-      await contract?.methods?.startVotingSession().send({ from: accounts[0] });
-      await refresh();
-    } catch (e) {
-      console.log(e)
-    }
-  };
-
-  const endVotingSession = async e => {
-    try {
-      await contract?.methods?.endVotingSession().send({ from: accounts[0] });
-      await refresh();
-    } catch (e) {
-      console.log(e)
-    }
-  };
-
-  const tallyVotes = async e => {
-    try {
-      await contract?.methods?.tallyVotes().send({ from: accounts[0] });
-      await refresh();
-    } catch (e) {
-      console.log(e)
-    }
-  };
-
   return (
     <div className="btns">
 
@@ -135,18 +87,9 @@ function ContractBtns({ isOwner, workflowStatusLabel }) {
               onChange={handleInputChange}
             />)
           </div>
-          <div onClick={startProposalsRegistering} className="input-btn">
-            startProposalsRegistering()
-          </div>
         </>: null
       }
 
-      {isOwner && workflowStatusLabel === "ProposalsRegistrationStarted" ? <>
-          <div onClick={endProposalsRegistering} className="input-btn">
-          endProposalsRegistering()
-          </div>
-        </>: null
-      }
       {workflowStatusLabel === "ProposalsRegistrationStarted" ? <>
           <div onClick={addProposal} className="input-btn">
           addProposal(<input
@@ -160,19 +103,6 @@ function ContractBtns({ isOwner, workflowStatusLabel }) {
 
       }
 
-      {isOwner && workflowStatusLabel === "ProposalsRegistrationEnded" ? <>
-          <div onClick={startVotingSession} className="input-btn">
-          startVotingSession()
-          </div>
-        </>: null
-      }
-
-      {isOwner && workflowStatusLabel === "VotingSessionStarted" ? <>
-          <div onClick={endVotingSession} className="input-btn">
-          endVotingSession()
-          </div>
-        </>: null
-      }
       {workflowStatusLabel === "VotingSessionStarted" ? <>
           <div onClick={setVote} className="input-btn">
           setVote(<input
@@ -184,19 +114,6 @@ function ContractBtns({ isOwner, workflowStatusLabel }) {
           </div>
         </>: null
       }
-
-      {isOwner && workflowStatusLabel === "VotingSessionEnded" ? <>
-          <div onClick={tallyVotes} className="input-btn">
-          tallyVotes()
-          </div>
-        </>: null
-      }
-      {/* {isOwner && workflowStatusLabel === "VotesTallied" ? <>
-          <div onClick={reset} className="input-btn">
-          reset()
-          </div>
-        </>: null
-      } */}
 
     </div>
   );

@@ -39,7 +39,11 @@ export default function MainContainer() {
         <Grid xs={8}>
           <Demo isOwner={isOwner} workflowStatusLabel={workflowStatusLabel} />
         </Grid>
-        <Grid xs={4}>{isOwner ? <AppStatus /> : null}</Grid>
+        <Grid xs={4}>
+          {isOwner ? (
+            <AppStatus workflowStatusLabel={workflowStatusLabel} />
+          ) : null}
+        </Grid>
       </Grid>
     </>
   )

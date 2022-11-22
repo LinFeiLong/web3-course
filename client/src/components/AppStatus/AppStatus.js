@@ -1,4 +1,4 @@
-import * as React from "react"
+import React, { useEffect } from "react"
 import Box from "@mui/material/Box"
 import Stepper from "@mui/material/Stepper"
 import Step from "@mui/material/Step"
@@ -7,6 +7,8 @@ import StepContent from "@mui/material/StepContent"
 import Button from "@mui/material/Button"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
+import useEth from "../../contexts/EthContext/useEth"
+import refresh from "../../utils/refresh"
 
 const steps = [
   {
@@ -35,15 +37,92 @@ const steps = [
   },
 ]
 
-export default function VerticalLinearStepper() {
-  const [activeStep, setActiveStep] = React.useState(0)
+export default function AppStatus({ workflowStatusLabel = 0 }) {
+  const [activeStep, setActiveStep] = React.useState(workflowStatusLabel)
+  const {
+    state: { contract, accounts },
+  } = useEth()
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+  const handleNext = async () => {
+    switch (activeStep) {
+      case 0:
+        await startProposalsRegistering()
+        break
+      case 1:
+        await endProposalsRegistering()
+        break
+      case 2:
+        await startVotingSession()
+        break
+      case 3:
+        await endVotingSession()
+        break
+      case 4:
+        await tallyVotes()
+        break
+      default:
+        break
+    }
+    await setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
 
   const handleReset = () => {
     setActiveStep(0)
+  }
+
+  useEffect(() => {
+    setActiveStep(workflowStatusLabel)
+  }, [workflowStatusLabel])
+
+  // ::::::::::::: STATE ::::::::::::: //
+
+  const startProposalsRegistering = async (e) => {
+    try {
+      await contract?.methods
+        ?.startProposalsRegistering()
+        .send({ from: accounts[0] })
+      await refresh()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const endProposalsRegistering = async (e) => {
+    try {
+      await contract?.methods
+        ?.endProposalsRegistering()
+        .send({ from: accounts[0] })
+      await refresh()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const startVotingSession = async (e) => {
+    try {
+      await contract?.methods?.startVotingSession().send({ from: accounts[0] })
+      await refresh()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const endVotingSession = async (e) => {
+    try {
+      await contract?.methods?.endVotingSession().send({ from: accounts[0] })
+      await refresh()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const tallyVotes = async (e) => {
+    try {
+      await contract?.methods?.tallyVotes().send({ from: accounts[0] })
+      await refresh()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
@@ -64,13 +143,15 @@ export default function VerticalLinearStepper() {
               <Typography>{step.description}</Typography>
               <Box sx={{ mb: 2 }}>
                 <div>
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    {index === steps.length - 1 ? "Finish" : "Continue"}
-                  </Button>
+                  {
+                    <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ mt: 1, mr: 1 }}
+                    >
+                      {index === steps.length - 1 ? "Résultats" : "Continuer"}
+                    </Button>
+                  }
                 </div>
               </Box>
             </StepContent>
