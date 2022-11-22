@@ -1,41 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import useEth from '../../contexts/EthContext/useEth';
 
-function Contract({ value, text, isOwner }) {
+function Contract({ value, text, isOwner, workflowStatusLabel }) {
   const { state: { contract } } = useEth();
-  const [workflowStatusLabel, setWorkflowStatusLabel] = useState('');
-
-  useEffect(() => {
-    (async function () {
-      const workflowStatus = await contract?.methods?.workflowStatus().call()
-
-      console.log({workflowStatus})
-
-      switch (workflowStatus) {
-        case '0':
-          setWorkflowStatusLabel('RegisteringVoters');
-          break;
-        case '1':
-          setWorkflowStatusLabel('ProposalsRegistrationStarted');
-          break;
-        case '2':
-          setWorkflowStatusLabel('ProposalsRegistrationEnded');
-          break;
-        case '3':
-          setWorkflowStatusLabel('VotingSessionStarted');
-          break;
-        case '4':
-          setWorkflowStatusLabel('VotingSessionEnded');
-          break;
-        case '5':
-          setWorkflowStatusLabel('VotesTallied');
-          break;
-        default:
-          break;
-      }
-      setWorkflowStatusLabel(workflowStatus)
-    })();
-  }, [contract])
 
   const [EventValue, setEventValue] = useState("");
   const [oldEvents, setOldEvents] = useState();

@@ -30,14 +30,14 @@ function ContractBtns({ setValue, setText, isOwner }) {
   return (
     <div className="btns">
 
-      <div onClick={addVoter} className="input-btn">
+      {isOwner ? <div onClick={addVoter} className="input-btn">
         addVoter(<input
           type="text"
           placeholder="address"
           value={inputValue}
           onChange={handleInputChange}
         />)
-      </div>
+      </div>: null}
 
     </div>
   );
