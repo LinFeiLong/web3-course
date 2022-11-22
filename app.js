@@ -14,41 +14,68 @@ const INFURA_API_KEY = "79822ce743c74f67b9f6ea147abf3044"
 // })
 
 // 2. Lecture des données d'un smart contract Web3.js
-const Web3 = require("web3")
-const rpcUrl = `https://goerli.infura.io/v3/` + INFURA_API_KEY
-const web3 = new Web3(rpcUrl)
+// const Web3 = require("web3")
+// const rpcUrl = `https://goerli.infura.io/v3/` + INFURA_API_KEY
+// const web3 = new Web3(rpcUrl)
 
+// const ABI = [
+//   {
+//     inputs: [],
+//     name: "get",
+//     outputs: [
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [
+//       {
+//         internalType: "uint256",
+//         name: "x",
+//         type: "uint256",
+//       },
+//     ],
+//     name: "set",
+//     outputs: [],
+//     stateMutability: "nonpayable",
+//     type: "function",
+//   },
+// ]
+
+// const SSaddress = "0x1f9C83F7311c1b0AD188E9925E2705a3B60c4b1d"
+
+// const simpleStorage = new web3.eth.Contract(ABI, SSaddress)
+// simpleStorage.methods.get().call((err, data) => {
+//   console.log(data)
+// })
+
+// 3. Exercice - Interaction avec un smart contract sur le réseau testnet Göeli
+const Web3 = require("web3")
+const rpcURL = "https://goerli.infura.io/v3/" + INFURA_API_KEY
+const web3 = new Web3(rpcURL)
 const ABI = [
   {
-    inputs: [],
-    name: "get",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "x",
-        type: "uint256",
-      },
-    ],
+    inputs: [{ internalType: "uint256", name: "x", type: "uint256" }],
     name: "set",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
+  {
+    inputs: [],
+    name: "get",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
 ]
-
-const SSaddress = "0x1f9C83F7311c1b0AD188E9925E2705a3B60c4b1d"
-
+const SSaddress = "0xfA95935932ECcd000765C772CF8A731B1E215d06"
 const simpleStorage = new web3.eth.Contract(ABI, SSaddress)
 simpleStorage.methods.get().call((err, data) => {
   console.log(data)
