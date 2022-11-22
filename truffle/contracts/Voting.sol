@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.13;
+pragma solidity 0.8.17;
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
 
@@ -9,7 +9,7 @@ contract Voting is Ownable {
     uint public winningProposalID;
 
     struct Voter {
-        bool isRegistered;
+    bool isRegistered;
         bool hasVoted;
         uint votedProposalId;
     }
