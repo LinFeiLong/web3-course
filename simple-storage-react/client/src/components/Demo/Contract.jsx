@@ -1,7 +1,8 @@
 import { useRef, useEffect } from "react";
 
-function Contract({ value }) {
+function Contract({ value, text }) {
   const spanEle = useRef(null);
+  const spanEle2 = useRef(null);
 
   useEffect(() => {
     spanEle.current.classList.add("flash");
@@ -20,6 +21,14 @@ function Contract({ value }) {
 
       <span className="secondary-color" ref={spanEle}>
         <strong>{value}</strong>
+      </span>
+
+
+      {`;
+  string greet = `}
+
+      <span className="secondary-color" ref={spanEle2}>
+        <strong>{text}</strong>
       </span>
 
       {`;
