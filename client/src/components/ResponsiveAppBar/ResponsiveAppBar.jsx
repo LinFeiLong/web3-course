@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,7 +20,20 @@ const settings = [];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const {state: { accounts }} = useEth()
+  const { state } = useEth()
+  const { contract, accounts } = state
+  const [ownerAddress, setOwnerAddress] = useState(null)
+  const isOwner = ownerAddress === accounts?.[0]
+
+  /**
+  * Automatically save the contract's owner address
+  */
+  useEffect(() => {
+    (async function () {
+      const address =  await contract?.methods?.owner().call()
+      setOwnerAddress(address)
+    })()
+  }, [contract, state])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -57,7 +70,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            Système de vote
+            Système de vote {isOwner ? "(Admin)":""}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

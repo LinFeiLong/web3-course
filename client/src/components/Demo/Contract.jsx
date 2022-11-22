@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useEth from '../../contexts/EthContext/useEth';
 
-function Contract({ isOwner, workflowStatusLabel }) {
+function Contract({ workflowStatusLabel }) {
   const { state: { contract } } = useEth();
 
   const [EventValue, setEventValue] = useState("");
@@ -42,12 +42,6 @@ function Contract({ isOwner, workflowStatusLabel }) {
 
   return (
     <code>
-      <span className="secondary-color">
-        <strong>{isOwner ? "Admin" : "User"}</strong>
-      </span>
-
-      <br />
-
       <span className="secondary-color">
         <strong>Workflow Status: {workflowStatusLabel}</strong>
       </span>

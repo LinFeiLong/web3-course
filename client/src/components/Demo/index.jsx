@@ -59,7 +59,7 @@ function Demo() {
   const demo =
     <>
       <div className="contract-container">
-        <Contract value={value} text={text} isOwner={isOwner} workflowStatusLabel={workflowStatusLabel} />
+        <Contract value={value} text={text} workflowStatusLabel={workflowStatusLabel} />
         <ContractBtns setValue={setValue} setText={setText} isOwner={isOwner} workflowStatusLabel={workflowStatusLabel}/>
       </div>
     </>;
