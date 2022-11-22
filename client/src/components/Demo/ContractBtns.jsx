@@ -5,7 +5,7 @@ function ContractBtns({ setValue, setText, isOwner, workflowStatusLabel }) {
   const { state: { contract, accounts } } = useEth();
   const [inputValue, setInputValue] = useState("");
   const [proposalValue, setProposalValue] = useState("");
-  const [voteValue, setVoteValue] = useState(null);
+  const [voteValue, setVoteValue] = useState("");
 
   const handleInputChange = e => {
       setInputValue(e.target.value);
@@ -35,6 +35,25 @@ function ContractBtns({ setValue, setText, isOwner, workflowStatusLabel }) {
       console.log(e)
     }
     setInputValue("");
+  };
+
+  // ::::::::::::: VOTE ::::::::::::: //
+
+  const setVote = async e => {
+    if (e.target.tagName === "INPUT") {
+      return;
+    }
+    if (voteValue === "") {
+      alert("Please enter a value to write.");
+      return;
+    }
+    const voteId = voteValue;
+
+    try {
+      await contract?.methods?.setVote(voteId).send({ from: accounts[0] });
+    } catch (e) {
+      console.log(e)
+    }
   };
 
   // ::::::::::::: PROPOSAL ::::::::::::: //
@@ -149,7 +168,7 @@ function ContractBtns({ setValue, setText, isOwner, workflowStatusLabel }) {
         </>: null
       }
       {workflowStatusLabel === "VotingSessionStarted" ? <>
-          <div onClick={setVoteValue} className="input-btn">
+          <div onClick={setVote} className="input-btn">
           setVote(<input
               type="text"
               placeholder="uint"
