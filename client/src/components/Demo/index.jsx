@@ -64,7 +64,7 @@ function Demo() {
       <Cta />
       <div className="contract-container">
         <Contract value={value} text={text} isOwner={isOwner} workflowStatusLabel={workflowStatusLabel} />
-        <ContractBtns setValue={setValue} setText={setText} isOwner={isOwner}/>
+        <ContractBtns setValue={setValue} setText={setText} isOwner={isOwner} workflowStatusLabel={workflowStatusLabel}/>
       </div>
       <Desc />
     </>;
