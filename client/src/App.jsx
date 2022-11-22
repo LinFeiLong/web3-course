@@ -1,14 +1,16 @@
 import { EthProvider } from "./contexts/EthContext";
-import Demo from "./components/Demo";
+// import Demo from "./components/Demo";
 import "./App.css";
+import ResponsiveAppBar from './components/ResponsiveAppBar/ResponsiveAppBar'
 
 function App() {
   return (
     <EthProvider>
       <div id="App" >
-        <div className="container">
+        <ResponsiveAppBar />
+        {/* <div className="container">
           <Demo />
-        </div>
+        </div> */}
       </div>
     </EthProvider>
   );
