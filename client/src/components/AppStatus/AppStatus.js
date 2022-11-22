@@ -61,6 +61,9 @@ export default function AppStatus({ workflowStatusLabel = 0 }) {
         await tallyVotes()
         break
       default:
+        await console.log(
+          "La commande de réinitialisation n'est pas implémenté"
+        )
         break
     }
     await setActiveStep((prevActiveStep) => prevActiveStep + 1)
