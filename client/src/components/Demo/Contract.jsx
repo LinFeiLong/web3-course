@@ -1,64 +1,45 @@
-import { useRef, useEffect, useState } from "react";
-import useEth from "../../contexts/EthContext/useEth";
+import React from 'react';
 
-function Contract({ value, text }) {
-  const spanEle = useRef(null);
-  const spanEle2 = useRef(null);
+function Contract({ value, text, isOwner }) {
+  // const [EventValue, setEventValue] = useState("");
+  // const [oldEvents, setOldEvents] = useState();
 
-  const [EventValue, setEventValue] = useState("");
-  const [oldEvents, setOldEvents] = useState();
-  const { state: { contract } } = useEth();
+  // useEffect(() => {
+  //   (async function () {
 
-  useEffect(() => {
-    spanEle.current.classList.add("flash");
-    const flash = setTimeout(() => {
-      spanEle.current.classList.remove("flash");
-    }, 300);
-    return () => {
-      clearTimeout(flash);
-    };
-  }, [value]);
+  //      let oldEvents= await contract.getPastEvents('valueChanged', {
+  //         fromBlock: 0,
+  //         toBlock: 'latest'
+  //       });
+  //       let oldies=[];
+  //       oldEvents.forEach(event => {
+  //           oldies.push(event.returnValues._val);
+  //       });
+  //       setOldEvents(oldies);
 
-  useEffect(() => {
-    spanEle2.current.classList.add("flash");
-    const flash = setTimeout(() => {
-      spanEle2.current.classList.remove("flash");
-    }, 300);
-    return () => {
-      clearTimeout(flash);
-    };
-  }, [text]);
-
-  useEffect(() => {
-    (async function () {
-
-       let oldEvents= await contract.getPastEvents('valueChanged', {
-          fromBlock: 0,
-          toBlock: 'latest'
-        });
-        let oldies=[];
-        oldEvents.forEach(event => {
-            oldies.push(event.returnValues._val);
-        });
-        setOldEvents(oldies);
-
-        await contract.events.valueChanged({fromBlock:"earliest"})
-        .on('data', event => {
-          let lesevents = event.returnValues._val;
-          setEventValue(lesevents);
-        })
-        .on('changed', changed => console.log(changed))
-        .on('error', err => console.log(err))
-        .on('connected', str => console.log(str))
-    })();
-  }, [contract])
+  //       await contract.events.valueChanged({fromBlock:"earliest"})
+  //       .on('data', event => {
+  //         let lesevents = event.returnValues._val;
+  //         setEventValue(lesevents);
+  //       })
+  //       .on('changed', changed => console.log(changed))
+  //       .on('error', err => console.log(err))
+  //       .on('connected', str => console.log(str))
+  //   })();
+  // }, [contract])
 
   return (
     <code>
+      <span className="secondary-color">
+        <strong>{isOwner ? "Admin" : "User"}</strong>
+      </span>
+
+      <br />
+
       {`contract SimpleStorage {
   uint256 value = `}
 
-      <span className="secondary-color" ref={spanEle}>
+      <span className="secondary-color">
         <strong>{value}</strong>
       </span>
 
@@ -66,7 +47,7 @@ function Contract({ value, text }) {
       {`;
   string greet = `}
 
-      <span className="secondary-color" ref={spanEle2}>
+      <span className="secondary-color">
         <strong>{text}</strong>
       </span>
 
@@ -80,9 +61,7 @@ function Contract({ value, text }) {
     value = newValue;
   }
 }
-  Events arriving: `} {EventValue} {`
-
-  Old events: `} {oldEvents} {``}
+  `}
 
     </code>
   );
