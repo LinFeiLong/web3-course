@@ -18,13 +18,13 @@ function Contract({ isOwner, workflowStatusLabel }) {
 
         let oldies=[];
         oldEvents.forEach(event => {
-            oldies.push(event.returnValues._val);
+            oldies.push(event.returnValues.voterAddress);
         });
         setOldEvents(oldies);
 
         await contract.events.VoterRegistered({fromBlock:"earliest"})
           .on('data', event => {
-          let lesevents = event.returnValues._val;
+          let lesevents = event.returnValues.voterAddress;
           setEventValue(lesevents);
         })
         .on('changed', changed => console.log(changed))
