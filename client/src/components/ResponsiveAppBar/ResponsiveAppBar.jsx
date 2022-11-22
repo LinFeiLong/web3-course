@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,28 +12,14 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import Blockies from 'react-blockies';
-import useEth from '../../contexts/EthContext/useEth';
+
 
 const pages = [];
 const settings = [];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({isOwner, account}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { state } = useEth()
-  const { contract, accounts } = state
-  const [ownerAddress, setOwnerAddress] = useState(null)
-  const isOwner = ownerAddress === accounts?.[0]
-
-  /**
-  * Automatically save the contract's owner address
-  */
-  useEffect(() => {
-    (async function () {
-      const address =  await contract?.methods?.owner().call()
-      setOwnerAddress(address)
-    })()
-  }, [contract, state])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -147,7 +133,7 @@ function ResponsiveAppBar() {
                 sx={{ p: 0 }}
               >
                 <Blockies
-                  seed={accounts?.[0]}
+                  seed={account}
                 />
               </IconButton>
             </Tooltip>

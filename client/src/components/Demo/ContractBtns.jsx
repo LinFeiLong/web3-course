@@ -2,7 +2,7 @@ import { useState } from "react";
 import useEth from "../../contexts/EthContext/useEth";
 import refresh from "../../utils/refresh"
 
-function ContractBtns({ setValue, setText, isOwner, workflowStatusLabel }) {
+function ContractBtns({ isOwner, workflowStatusLabel }) {
   const { state: { contract, accounts } } = useEth();
   const [inputValue, setInputValue] = useState("");
   const [proposalValue, setProposalValue] = useState("");

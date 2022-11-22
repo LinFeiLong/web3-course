@@ -41,13 +41,7 @@ function Contract({ workflowStatusLabel }) {
   }, [contract]);
 
   return (
-    <code>
-      <span className="secondary-color">
-        <strong>Workflow Status: {workflowStatusLabel}</strong>
-      </span>
-
-      <br />
-
+    <>
       <span className="secondary-color">
         <strong>Voter Registered: {EventValue}</strong>
       </span>
@@ -68,7 +62,7 @@ function Contract({ workflowStatusLabel }) {
       }
 
 
-    </code>
+    </>
   );
 }
 
