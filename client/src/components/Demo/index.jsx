@@ -21,7 +21,7 @@ function Demo() {
   */
   useEffect(() => {
     (async function () {
-      const address =  await contract.methods?.owner().call()
+      const address =  await contract?.methods?.owner().call()
       setOwnerAddress(address)
     })()
   }, [contract])

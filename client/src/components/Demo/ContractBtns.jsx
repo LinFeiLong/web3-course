@@ -6,9 +6,7 @@ function ContractBtns({ setValue, setText, isOwner }) {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = e => {
-    if (/^\d+$|^$/.test(e.target.value)) {
       setInputValue(e.target.value);
-    }
   };
 
   const addVoter = async e => {
@@ -20,7 +18,13 @@ function ContractBtns({ setValue, setText, isOwner }) {
       return;
     }
     const address = inputValue;
-    await contract.methods.addVoter(address).send({ from: accounts[0] });
+
+    try {
+      await contract?.methods?.addVoter(address).send({ from: accounts[0] });
+    } catch (e) {
+      console.log(e)
+    }
+    setInputValue("");
   };
 
   return (

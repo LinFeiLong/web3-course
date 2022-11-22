@@ -7,7 +7,7 @@ function Contract({ value, text, isOwner }) {
 
   useEffect(() => {
     (async function () {
-      const workflowStatus = await contract.methods.workflowStatus().call()
+      const workflowStatus = await contract?.methods?.workflowStatus().call()
 
       console.log({workflowStatus})
 
@@ -37,32 +37,32 @@ function Contract({ value, text, isOwner }) {
     })();
   }, [contract])
 
-  // const [EventValue, setEventValue] = useState("");
-  // const [oldEvents, setOldEvents] = useState();
+  const [EventValue, setEventValue] = useState("");
+  const [oldEvents, setOldEvents] = useState();
 
-  // useEffect(() => {
-  //   (async function () {
+  useEffect(() => {
+    (async function () {
 
-  //      let oldEvents= await contract.getPastEvents('valueChanged', {
-  //         fromBlock: 0,
-  //         toBlock: 'latest'
-  //       });
-  //       let oldies=[];
-  //       oldEvents.forEach(event => {
-  //           oldies.push(event.returnValues._val);
-  //       });
-  //       setOldEvents(oldies);
+       let oldEvents= await contract.getPastEvents('VoterRegistered', {
+          fromBlock: 0,
+          toBlock: 'latest'
+        });
+        let oldies=[];
+        oldEvents.forEach(event => {
+            oldies.push(event.returnValues._val);
+        });
+        setOldEvents(oldies);
 
-  //       await contract.events.valueChanged({fromBlock:"earliest"})
-  //       .on('data', event => {
-  //         let lesevents = event.returnValues._val;
-  //         setEventValue(lesevents);
-  //       })
-  //       .on('changed', changed => console.log(changed))
-  //       .on('error', err => console.log(err))
-  //       .on('connected', str => console.log(str))
-  //   })();
-  // }, [contract])
+        await contract.events.VoterRegistered({fromBlock:"earliest"})
+        .on('data', event => {
+          let lesevents = event.returnValues._val;
+          setEventValue(lesevents);
+        })
+        .on('changed', changed => console.log(changed))
+        .on('error', err => console.log(err))
+        .on('connected', str => console.log(str))
+    })();
+  }, [contract])
 
   return (
     <code>
@@ -74,6 +74,18 @@ function Contract({ value, text, isOwner }) {
 
       <span className="secondary-color">
         <strong>Workflow Status: {workflowStatusLabel}</strong>
+      </span>
+
+      <br />
+
+      <span className="secondary-color">
+        <strong>Voter Registered: {EventValue}</strong>
+      </span>
+
+      <br />
+
+      <span className="secondary-color">
+        <strong>Old: {oldEvents}</strong>
       </span>
 
     </code>
