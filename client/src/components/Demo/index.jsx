@@ -14,10 +14,6 @@ function Demo() {
   const isOwner = ownerAddress === accounts?.[0]
   const [workflowStatusLabel, setWorkflowStatusLabel] = useState('')
 
-  useEffect(() => {
-    console.log("Updated")
-  }, [contract, state])
-
   /**
   * Automatically save the contract's owner address
   */
