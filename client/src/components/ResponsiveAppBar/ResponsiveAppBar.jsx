@@ -10,15 +10,17 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import Blockies from 'react-blockies';
+import useEth from '../../contexts/EthContext/useEth';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = [];
+const settings = [];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const {state: { accounts }} = useEth()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -39,7 +41,7 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <HowToVoteIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -55,7 +57,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Système de vote
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -94,7 +96,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <HowToVoteIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -132,13 +134,7 @@ function ResponsiveAppBar() {
                 sx={{ p: 0 }}
               >
                 <Blockies
-                  seed="Jeremy"
-                  // size={10} {/* number of squares wide/tall the image will be; default = 15 */}
-                  // scale={3} {/* width/height of each square in pixels; default = 4 */}
-                  // color="#dfe" {/* normal color; random by default */}
-                  // bgColor="#ffe" {/* background color; random by default */}
-                  // spotColor="#abc" {/* color of the more notable features; random by default */}
-                  // className="identicon" {/* optional class name for the canvas element; "identicon" by default */}
+                  seed={accounts?.[0]}
                 />
               </IconButton>
             </Tooltip>
