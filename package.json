@@ -1,4 +1,7 @@
 {
+  "name": "web3-course",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "web3": "^1.8.1"
   }
