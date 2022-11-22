@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useEth from "../../contexts/EthContext/useEth";
+import refresh from "../../utils/refresh"
 
 function ContractBtns({ setValue, setText, isOwner, workflowStatusLabel }) {
   const { state: { contract, accounts } } = useEth();
@@ -80,6 +81,7 @@ function ContractBtns({ setValue, setText, isOwner, workflowStatusLabel }) {
   const startProposalsRegistering = async e => {
     try {
       await contract?.methods?.startProposalsRegistering().send({ from: accounts[0] });
+      await refresh();
     } catch (e) {
       console.log(e)
     }
@@ -88,6 +90,7 @@ function ContractBtns({ setValue, setText, isOwner, workflowStatusLabel }) {
   const endProposalsRegistering = async e => {
     try {
       await contract?.methods?.endProposalsRegistering().send({ from: accounts[0] });
+      await refresh();
     } catch (e) {
       console.log(e)
     }
@@ -96,6 +99,7 @@ function ContractBtns({ setValue, setText, isOwner, workflowStatusLabel }) {
   const startVotingSession = async e => {
     try {
       await contract?.methods?.startVotingSession().send({ from: accounts[0] });
+      await refresh();
     } catch (e) {
       console.log(e)
     }
@@ -104,6 +108,7 @@ function ContractBtns({ setValue, setText, isOwner, workflowStatusLabel }) {
   const endVotingSession = async e => {
     try {
       await contract?.methods?.endVotingSession().send({ from: accounts[0] });
+      await refresh();
     } catch (e) {
       console.log(e)
     }
@@ -112,6 +117,7 @@ function ContractBtns({ setValue, setText, isOwner, workflowStatusLabel }) {
   const tallyVotes = async e => {
     try {
       await contract?.methods?.tallyVotes().send({ from: accounts[0] });
+      await refresh();
     } catch (e) {
       console.log(e)
     }
